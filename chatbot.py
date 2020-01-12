@@ -3,6 +3,7 @@ import speech_recognition as sr
 import wikipedia
 import webbrowser
 import pyttsx3
+import os
 
 
 engine = pyttsx3.init('espeak')
@@ -12,8 +13,9 @@ voices = engine.getProperty('voices')
 #         print(voices[i].id)
 # print(voices[10].id)
 
-engine.setProperty('voice', voices[10].id)
-# engine.setProperty('rate', 150)
+# engine.setProperty('voice', voices[10].id)
+engine.setProperty('rate', 150)
+
 
 def speak(audio):
     engine.say(audio)
@@ -29,7 +31,7 @@ def wishMe():
     else:
         speak("Good Evening")
 
-    speak("I am The Prototype1. How may I help you")
+    speak("I am Mac1. How may I help you")
 
 
 def takeCommand():  # it takes mic input and returns the string as output
@@ -56,11 +58,10 @@ if __name__ == "__main__":
         query = takeCommand().lower()
 
         if 'wikipedia' in query:
-            speak("Searching .....")
             query = query.replace("wikipedia", "")
             results = wikipedia.summary(query, sentences=2)
-            speak("According to wikipedia")
             print(results)
+            speak("According to wikipedia")
             speak(results)
 
         if 'search' in query:
@@ -82,6 +83,15 @@ if __name__ == "__main__":
 
         elif 'open google' in query:
             webbrowser.open("https://google.com")
+
+        elif 'play' in query:
+            speak("playing")
+            query = query.replace("play", "")
+            webbrowser.open("https://www.youtube.com/results?search_query=%s" % query)
+
+        elif 'bye' in query:
+            speak("Mac1 signing off..")
+            quit()
 
 
 # 10 11 29 51
